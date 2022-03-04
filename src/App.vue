@@ -1,17 +1,48 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <BaseHeader/>
+    <main>
+      <TaskCard v-for="task in tasks" :key="task.id" :task="task" @change-task-state="changeTaskDone"/>
+
+    </main>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import BaseHeader from "@/components/BaseHeader";
+import TaskCard from "@/components/TaskCard";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    BaseHeader,
+    TaskCard
+  },
+  data() {
+    return {
+      tasks: [
+        {
+          id: 0,
+          name: 'Купить хлеб',
+          done: false
+        },
+        {
+          id: 1,
+          name: 'Купить сыра',
+          done: false
+        },
+        {
+          id: 2,
+          name: 'Купить пива',
+          done: false
+        }
+      ]
+    }
+  },
+  methods: {
+    changeTaskDone(task_id) {
+      this.tasks[this.tasks.findIndex(item => item.id == task_id)].done = !this.tasks[this.tasks.findIndex(item => item.id == task_id)].done
+    }
   }
 }
 </script>
